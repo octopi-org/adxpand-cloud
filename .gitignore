@@ -4,7 +4,9 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 # Some other files
+.gcloudignore
 google-ads.yaml
+get_campaigns.py
 static
 amplifyio-308412-026f0a0ccd6d.json
 amplifyEnv
