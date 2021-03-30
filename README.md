@@ -2,7 +2,7 @@
 
 **amplifyIo**:copyright: is a digital infrastructure that enables clients to visualize data from Search Engine Marketing(SEM) campaigns at a microscopic level, marrying the business logic of clients together with the data from sales campaigns to help companies align their campaign objectives and methodology with their SEM campaigns. 
 
-This project is a private project and further information regarding the specific business logic of **amplifyIo** can only be obtained by request to the maintainer of this **GitHub**:copyright: repository.
+This project is a private project and further information regarding the specific business logic of **amplifyIo:copyright:** can only be obtained by request to the maintainer of this **GitHub**:copyright: repository.
 
 #### Languages Used
 1. Python 3.9 or greater
