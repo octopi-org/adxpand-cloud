@@ -1,10 +1,25 @@
 # The amplifyIo API Project 
 
+## Overview
+
+> a proud BuildIT.Io project
+
+# **Contents**
+
+* [Top](#the-amplifyio-api-project)
+	* [Overview](#overview)
+		* [Technologies and Documentation](#all-the-tech)
+		* [What you need to know](#using-git-for-ides)
+	* [Setting Up](#getting-started)
+
+
 **amplifyIo**:copyright: is a digital infrastructure that enables clients to visualize data from Search Engine Marketing(SEM) campaigns at a microscopic level, marrying the business logic of clients together with the data from sales campaigns to help companies align their campaign objectives and methodology with their SEM campaigns. 
 
 This project is a private project and further information regarding the specific business logic of **amplifyIo:copyright:** can only be obtained by request to the maintainer of this **GitHub**:copyright: repository.
 
-Click on the links to read more about the technologies in the respective repositories
+### All the Tech
+
+Click on the links to read more about the technologies in the respective repositories!
 
 #### Languages Used
 1. [Python 3.9 or greater](https://www.python.org/downloads/release/python-390/)
@@ -24,7 +39,7 @@ Click on the links to read more about the technologies in the respective reposit
 	* [CloudSQL](https://cloud.google.com/sql/?utm_source=google&utm_medium=cpc&utm_campaign=japac-SG-all-en-dr-bkwsrmkt-all-all-trial-e-dr-1009882&utm_content=text-ad-none-none-DEV_c-CRE_505012083112-ADGP_Hybrid%20%7C%20BKWS%20-%20EXA%20%7C%20Txt%20~%20Databases%20~%20Cloud%20SQL_cloud%20storage-google%20cloud%20sql-KWID_43700054967487601-kwd-28489936691&userloc_9062542-network_g&utm_term=KW_google%20cloud%20sql&gclid=Cj0KCQjwmIuDBhDXARIsAFITC_7waWh5yIuH4ViOG_XcNETBeUcbPgYRfkGsHctJHfj11h_TI9p7v5caArh0EALw_wcB&gclsrc=aw.ds)
 	* [Google OAuth 2.0](https://developers.google.com/identity/protocols/oauth2)
 
-### "Pre-Requisites"
+### Some "Pre-Requisites" Before We Begin...
 
 > For an in-depth walk-through for setting up an entire project on GCP, it is best to refer back to the Google Cloud Platform (GCP) docs to see how a Django project is set up on GCP and how to configure a GCP project yourself (alternatively, create your own project!). **DISCLAIMER AND REITERATION: This GitHub is not meant to teach you how to set up on GCP.** Do note that knowledge on how Django is set up on GCP is **NOT REQUIRED** as the set up has already been taken care of during the configuration of this repository. 
 
@@ -36,10 +51,10 @@ This [tutorial](https://github.com/buildit-Io/README#using-git-for-ides) will wa
 
 Alternatively, head over to BuildIT.Io's [introduction page](https://github.com/buildit-Io/README) for all the things a new developer needs to know.
 
+## Getting Started
 
-Download the google cloud sdk and the google_cloud_prox.exe for your system to write changes from local to GCP
 
-# Note to Developer:
+## Note to Developer:
 0) Always activate cloud_sql_proxy.exe to write local changes into the remote GCP project
 1) Remember to update your urls.py and settings.py to include any new data models and urls you have built in Django
 2) Check that you are already in the environment 
