@@ -1,3 +1,23 @@
+# The amplifyIo API Project 
+
+**amplifyIo**:copyright: is a digital infrastructure that enables clients to visualize data from Search Engine Marketing(SEM) campaigns at a microscopic level, marrying the business logic of clients together with the data from sales campaigns to help companies align their campaign objectives and methodology with their SEM campaigns. 
+
+This project is a private project and further information regarding the specific business logic of **amplifyIo** can only be obtained by request to the maintainer of this **GitHub**:copyright: repository.
+
+#### Languages Used
+1. Python 3.9 or greater
+2. MySQL 8.0
+
+#### Frameworks
+1. Django + Rest Framework
+
+#### Subsidiary Technologies 
+1. Google Ads API
+2. Google Cloud Platform 
+	* App Engine
+	* CloudSQL
+	* Google API Console
+
 # Getting started with Django on Google Cloud Platform on App Engine Standard
 
 [![Open in Cloud Shell][shell_img]][shell_link]
