@@ -4,35 +4,39 @@
 
 This project is a private project and further information regarding the specific business logic of **amplifyIo:copyright:** can only be obtained by request to the maintainer of this **GitHub**:copyright: repository.
 
+Click on the links to read more about the technologies in the respective repositories
+
 #### Languages Used
-1. Python 3.9 or greater
-2. MySQL 8.0
+1. [Python 3.9 or greater](https://www.python.org/downloads/release/python-390/)
+2. [MySQL 8.0](https://dev.mysql.com/doc/relnotes/mysql/8.0/en/)
 
 #### Frameworks
-1. Django + Rest Framework
+1. [django](https://www.djangoproject.com/) + [django REST Framework](https://www.django-rest-framework.org/)
+
+#### Libraries
+1. [pandas](https://pandas.pydata.org/)
+2. [Google Ads API Python Client Library](https://github.com/googleads/google-ads-python/)
 
 #### Subsidiary Technologies 
-1. Google Ads API
-2. Google Cloud Platform 
-	* App Engine
-	* CloudSQL
-	* Google API Console
+1. [Google Ads API](https://developers.google.com/google-ads/api/docs/start)
+2. [Google Cloud Platform](https://cloud.google.com/gcp/?utm_source=google&utm_medium=cpc&utm_campaign=japac-SG-all-en-dr-bkws-all-all-trial-e-dr-1009882&utm_content=text-ad-none-none-DEV_c-CRE_498697927861-ADGP_Hybrid%20%7C%20BKWS%20-%20EXA%20%7C%20Txt%20~%20GCP%20~%20General_cloud%20-%20platform-KWID_43700020290823408-kwd-297423147525&userloc_9062542-network_g&utm_term=KW_cloud%20google%20platform&gclid=Cj0KCQjwmIuDBhDXARIsAFITC_5lqqFuB4b4MKNYfuit5KON90y88vwl8t6tQyFvPUbKDJWL4Xk2cGkaAobgEALw_wcB&gclsrc=aw.ds)
+	* [App Engine](https://cloud.google.com/appengine/?utm_source=google&utm_medium=cpc&utm_campaign=japac-SG-all-en-dr-bkws-all-all-trial-e-dr-1009882&utm_content=text-ad-none-none-DEV_c-CRE_505050348941-ADGP_Hybrid%20%7C%20BKWS%20-%20EXA%20%7C%20Txt%20~%20Compute%20~%20App%20Engine_app%20engine-google%20cloud-KWID_43700008276145764-kwd-79074736158&userloc_9062542-network_g&utm_term=KW_google%20cloud%20app%20engine&gclid=Cj0KCQjwmIuDBhDXARIsAFITC_5UZ11f7uiEulTaKp6Gd6-PSq06kK7l7MvDADClSdcYMlo7pshxFYQaAi3gEALw_wcB&gclsrc=aw.ds)
+	* [CloudSQL](https://cloud.google.com/sql/?utm_source=google&utm_medium=cpc&utm_campaign=japac-SG-all-en-dr-bkwsrmkt-all-all-trial-e-dr-1009882&utm_content=text-ad-none-none-DEV_c-CRE_505012083112-ADGP_Hybrid%20%7C%20BKWS%20-%20EXA%20%7C%20Txt%20~%20Databases%20~%20Cloud%20SQL_cloud%20storage-google%20cloud%20sql-KWID_43700054967487601-kwd-28489936691&userloc_9062542-network_g&utm_term=KW_google%20cloud%20sql&gclid=Cj0KCQjwmIuDBhDXARIsAFITC_7waWh5yIuH4ViOG_XcNETBeUcbPgYRfkGsHctJHfj11h_TI9p7v5caArh0EALw_wcB&gclsrc=aw.ds)
+	* [Google OAuth 2.0](https://developers.google.com/identity/protocols/oauth2)
 
-# Getting started with Django on Google Cloud Platform on App Engine Standard
+### "Pre-Requisites"
 
-[![Open in Cloud Shell][shell_img]][shell_link]
+> For an in-depth walk-through for setting up an entire project on GCP, it is best to refer back to the Google Cloud Platform (GCP) docs to see how a Django project is set up on GCP and how to configure a GCP project yourself (alternatively, create your own project!). **DISCLAIMER AND REITERATION: This GitHub is not meant to teach you how to set up on GCP.** Do note that knowledge on how Django is set up on GCP is **NOT REQUIRED** as the set up has already been taken care of during the configuration of this repository. 
 
-[shell_img]: http://gstatic.com/cloudssh/images/open-btn.png
-[shell_link]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/GoogleCloudPlatform/python-docs-samples&page=editor&open_in_editor=appengine/standard_python38/django/README.md
+This [tutorial](https://cloud.google.com/python/django/appengine) will walk you through on how to configure your own GCP Project with django.
 
-This repository is an example of how to run a [Django](https://www.djangoproject.com/) 
-app on Google App Engine Standard Environment. It uses the 
-[Writing your first Django app](https://docs.djangoproject.com/en/2.1/intro/tutorial01/) as the 
-example app to deploy.
+This [tutorial](https://github.com/buildit-Io/README#github-for-the-new-dev) will walk you through on how to start working on this project with GIT
+
+This [tutorial](https://github.com/buildit-Io/README#using-git-for-ides) will walk you through on how to use an IDE together with GIT
+
+Alternatively, head over to BuildIT.Io's [introduction page](https://github.com/buildit-Io/README) for all the things a new developer needs to know.
 
 
-# Tutorial
-See our [Running Django in the App Engine Standard Environment](https://cloud.google.com/python/django/appengine) tutorial for instructions for setting up and deploying this sample application.
 Download the google cloud sdk and the google_cloud_prox.exe for your system to write changes from local to GCP
 
 # Note to Developer:
