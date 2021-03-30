@@ -41,9 +41,9 @@ Click on the links to read more about the technologies in the respective reposit
 ### Some "Pre-Requisites" Before We Begin...
 
 > For an in-depth walk-through for setting up an entire project on GCP, it is best to refer back to the Google Cloud Platform (GCP) docs to see how a Django project is set up on GCP and how to configure a GCP project yourself (alternatively, create your own project!). 
-***DISCLAIMER AND REITERATION: This GitHub is not meant to teach you how to set up on GCP.** Do note that knowledge on how Django is set up on GCP is **NOT REQUIRED** as the set up has already been taken care of during the configuration of this repository.*
 
 This [tutorial](https://cloud.google.com/python/django/appengine) will walk you through on how to configure your own GCP Project with django.
+> ***DISCLAIMER AND REITERATION: This GitHub is not meant to teach you how to set up on GCP.** Do note that knowledge on how Django is set up on GCP is **NOT REQUIRED** as the set up has already been taken care of during the configuration of this repository.*
 
 This [tutorial](https://github.com/buildit-Io/README#github-for-the-new-dev) will walk you through on how to start working on this project with GIT
 
