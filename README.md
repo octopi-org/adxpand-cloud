@@ -1,7 +1,5 @@
 # The amplifyIo API Project 
 
-## Overview
-
 > a proud BuildIT.Io project
 
 # **Contents**
@@ -12,6 +10,7 @@
 		* [What you need to know](#using-git-for-ides)
 	* [Setting Up](#getting-started)
 
+## Overview
 
 **amplifyIo**:copyright: is a digital infrastructure that enables clients to visualize data from Search Engine Marketing(SEM) campaigns at a microscopic level, marrying the business logic of clients together with the data from sales campaigns to help companies align their campaign objectives and methodology with their SEM campaigns. 
 
