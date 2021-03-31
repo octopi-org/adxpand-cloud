@@ -9,6 +9,7 @@
 		* [Technologies and Documentation](#all-the-tech)
 		* [What you need to know](#using-git-for-ides)
 	* [Setting Up](#getting-started)
+	* [Making Changes](#making-changes)
 	* [Some stuff to care about](#note-to-developer)
 
 ## Overview
@@ -94,7 +95,7 @@ Alternatively, head over to BuildIT.Io's [introduction page](https://github.com/
 	Can't connect to MySQL server on '127.0.0.1' (3306)
 	```
 	
-	This is completely normal if you already downloaded MySQL or equivalent technologies in your computer as 3306 is usually the main port for servers to listen for calls on. In such cases, just check [which ports are open on your computer](https://smallbusiness.chron.com/identify-ports-use-computer-55829.html) and substitute 3306 with an available port provided by the computer.
+	This is completely normal if you already downloaded MySQL or equivalent technologies in your computer as 3306 is usually the main port for servers to listen for calls on. In such cases, just check [which ports are open on your computer](https://smallbusiness.chron.com/identify-ports-use-computer-55829.html) and substitute 3306 with an available port provided by the computer. **Keep this running throughout the development process**.
 7. Now, we need to install all the dependencies into the virtual environement you created in 2 if this has not been done. On the terminal, actiavte your environement and run the following command:
 	
 	```
@@ -108,13 +109,31 @@ Alternatively, head over to BuildIT.Io's [introduction page](https://github.com/
 	```
 	http://localhost:8000
 	```
+9. Add an account to use the django admin console (signing in and viewing the databases from the built-in admin page on django)
+	
+	```
+	python manage.py createsuperuser
+	```
+	Follow the prompts, then restart your local web server again.
+	
+You can now make changes to your django project. Here are some [reminders](#note-to-developers) when making changes visible on the local web server.
+
+## Making Changes
+With django, you need to enter a few standard commands everytime changes are made. This is done by 
+
+	```
+	python manage.py makemigrations
+	python manage.py makemigrations amplifyIoAPI-or-any-other-project
+	python manage.py migrate
+	```
 
 ## Note to Developer:
 0) Always activate cloud_sql_proxy.exe to write local changes into the remote GCP project
-1) Remember to update your urls.py and settings.py to include any new data models and urls you have built in Django
-2) Check that you are already in the environment 
-3) For every new property, always start with python manage.py startproject new-property-name on the command line
-3) After adding the new environment and making the necessary changes on urls and settings, don't forget to do python manage.py makemigrations, python manage.py makemigrations new-property-name and 
+1) Stop your local webserver with `Ctrl-C` if you intend to use manage.py to run other functions like `createsuperuser`.
+2) Remember to update your urls.py and settings.py to include any new data models and urls you have built in Django
+3) Check that you are already in the environment 
+4) For every new property, always start with python manage.py startproject new-property-name on the command line
+5) After adding the new environment and making the necessary changes on urls and settings, don't forget to do python manage.py makemigrations, python manage.py makemigrations new-property-name and 
 python manage.py migrate to complete bootstrapping
 4) to check for changes, use python manage.py runserver 
 5) to generate static changes, use python manage.py collectstatic 
