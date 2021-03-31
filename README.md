@@ -1,10 +1,10 @@
-# The amplifyIo API Project 
+# The amplifyIo Project 
 
 > a proud BuildIT.Io project
 
 # **Contents**
 
-* [Top](#the-amplifyio-api-project)
+* [Top](#the-amplifyio-project)
 	* [Overview](#overview)
 		* [Technologies and Documentation](#all-the-tech)
 		* [What you need to know](#using-git-for-ides)
