@@ -61,15 +61,21 @@ Alternatively, head over to BuildIT.Io's [introduction page](https://github.com/
 6. Next, we need to connect to the Google Cloud Server to even begin making edits.
 	For Window Users:
 	
-	`cloud_sql_proxy.exe -instances"amplifyio-308412:asia-southeast1:amplify-io"=tcp:3306`
+	```
+	cloud_sql_proxy.exe -instances"amplifyio-308412:asia-southeast1:amplify-io"=tcp:3306
+	```
 	
 	For Mac/Linux Users:
 	
-	`.\cloud_sql_proxy -instances"amplifyio-308412:asia-southeast1:amplify-io"=tcp:3306`
+	```
+	.\cloud_sql_proxy -instances"amplifyio-308412:asia-southeast1:amplify-io"=tcp:3306
+	```
  	
 	At times you may try to connect and result in the following error:
 	
-	`Can't connect to MySQL server on '127.0.0.1' (3306)`
+	```
+	Can't connect to MySQL server on '127.0.0.1' (3306)
+	```
 	
 	This is completely normal if you already downloaded MySQL or equivalent technologies in your computer as 3306 is usually the main port for servers to listen for calls on. In such cases, just check [which ports are open on your computer](https://smallbusiness.chron.com/identify-ports-use-computer-55829.html)
 
