@@ -67,7 +67,11 @@ Alternatively, head over to BuildIT.Io's [introduction page](https://github.com/
 	```
 	new-env\Scripts\activate
 	```
-   Always remember to be running from the **correct** directory where your `new-env` is.
+   Always remember to be running from the **correct** directory where your `new-env` is. if successful you should see something similar to below:
+   
+   	```
+	(new-env) MyComputer\User-19982: $
+	```
 5. [Download Google Cloud SDK](https://cloud.google.com/sdk/?utm_source=google&utm_medium=cpc&utm_campaign=japac-SG-all-en-dr-bkws-all-pkws-trial-e-dr-1009882&utm_content=text-ad-none-none-DEV_c-CRE_396364030216-ADGP_Hybrid%20%7C%20BKWS%20-%20EXA%20%7C%20Txt%20~%20Developer%20Tools%20~%20Cloud%20SDK_cloud%20sdk-general%20-%20Products-KWID_43700049545049408-kwd-76317487932&userloc_9062507-network_g&utm_term=KW_google%20cloud%20sdk&gclid=CjwKCAjwu5CDBhB9EiwA0w6sLflBzTZ-QAQVpTciNqK96RHXg_lbyDyN1NhX4FDUx7aEhUOO7djQTRoCkToQAvD_BwE&gclsrc=aw.ds)
 6. [Download Cloud SQL Proxy](https://cloud.google.com/python/django/appengine#installingthecloudsqlproxy) (we recommend placing this file in the same location as where the Google CLoud SDK Program is kept, although it should not matter since Cloud SQL Proxy can technically run from any directory in the command line)
 7. Open and run the Google Cloud SDK.
@@ -91,10 +95,18 @@ Alternatively, head over to BuildIT.Io's [introduction page](https://github.com/
 	```
 	
 	This is completely normal if you already downloaded MySQL or equivalent technologies in your computer as 3306 is usually the main port for servers to listen for calls on. In such cases, just check [which ports are open on your computer](https://smallbusiness.chron.com/identify-ports-use-computer-55829.html) and substitute 3306 with an available port provided by the computer.
-7. Now, we need to install all the dependencies into the virtual environement you created in 2 if this has not been done. On the terminal, navigate to your environementRun the following command:
+7. Now, we need to install all the dependencies into the virtual environement you created in 2 if this has not been done. On the terminal, actiavte your environement and run the following command:
 	
 	```
 	pip install -r requirements.txt
+	```
+8. Once all this is done, we can then run django normally. Navigate to the folder with the `manage.py` file and start a local web server.
+	```
+	python manage.py runserver
+	``` 
+	Then, in your browser, proceed to 
+	```
+	http://localhost:8000
 	```
 
 ## Note to Developer:
