@@ -120,7 +120,7 @@ You can now make changes to your django project. Here are some [reminders](#note
 
 ## Making Changes
 With django, you need to enter a few standard commands everytime changes are made. This is done by 
-
+	
 	```
 	python manage.py makemigrations
 	python manage.py makemigrations amplifyIoAPI-or-any-other-project
