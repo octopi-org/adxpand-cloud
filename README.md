@@ -53,7 +53,7 @@ This [tutorial](https://github.com/buildit-Io/README#using-git-for-ides) will wa
 
 Alternatively, head over to BuildIT.Io's [introduction page](https://github.com/buildit-Io/README) for all the things a new developer needs to know.
 
-Lastly, ensure the owner of this project has provided you a organisation email and added you into the project. the email should look something like `yourname@organisation.page` or `yourname@organisation.com`. If you do not have this information, the next few instructions will not work for you.
+Lastly, ensure the owner of this project has provided you an organisation email and added you into the project. the email should look something like `yourname@organisation.page` or `yourname@organisation.com`. If you do not have this information, the next few instructions will not work for you.
 
 ## Getting Started
 1. Clone this repository into a desired folder
