@@ -80,13 +80,13 @@ Alternatively, head over to BuildIT.Io's [introduction page](https://github.com/
 	For Window Users:
 	
 	```
-	cloud_sql_proxy.exe -instances"amplifyio-308412:asia-southeast1:amplify-io"=tcp:3306
+	cloud_sql_proxy.exe -instances="amplifyio-308412:asia-southeast1:amplify-io"=tcp:3306
 	```
 	
 	For Mac/Linux Users:
 	
 	```
-	.\cloud_sql_proxy -instances"amplifyio-308412:asia-southeast1:amplify-io"=tcp:3306
+	.\cloud_sql_proxy -instances="amplifyio-308412:asia-southeast1:amplify-io"=tcp:3306
 	```
  	
 	At times you may try to connect and result in the following error:
