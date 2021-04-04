@@ -83,7 +83,6 @@ Lastly, ensure the owner of this project has provided you an organisation email 
 5. [Download Google Cloud SDK](https://cloud.google.com/sdk/?utm_source=google&utm_medium=cpc&utm_campaign=japac-SG-all-en-dr-bkws-all-pkws-trial-e-dr-1009882&utm_content=text-ad-none-none-DEV_c-CRE_396364030216-ADGP_Hybrid%20%7C%20BKWS%20-%20EXA%20%7C%20Txt%20~%20Developer%20Tools%20~%20Cloud%20SDK_cloud%20sdk-general%20-%20Products-KWID_43700049545049408-kwd-76317487932&userloc_9062507-network_g&utm_term=KW_google%20cloud%20sdk&gclid=CjwKCAjwu5CDBhB9EiwA0w6sLflBzTZ-QAQVpTciNqK96RHXg_lbyDyN1NhX4FDUx7aEhUOO7djQTRoCkToQAvD_BwE&gclsrc=aw.ds)
 6. [Download Cloud SQL Proxy](https://cloud.google.com/python/django/appengine#installingthecloudsqlproxy) (we recommend placing this file in the same location as where the Google CLoud SDK Program is kept, although it should not matter since Cloud SQL Proxy can technically run from any directory in the command line)
 7. Open and run the Google Cloud SDK.
-<<<<<<< HEAD
 8. Next, we need to connect to the Google Cloud Server to even begin making edits.
     
 	For First Time Users:
@@ -98,25 +97,6 @@ Lastly, ensure the owner of this project has provided you an organisation email 
 	
 	```
 	cloud_sql_proxy.exe --instances="amplifyio-308412:asia-southeast1:amplify-io"=tcp:3307
-=======
-8. Run the following to first authenticate your account with the Google Cloud SDK
-	```
-	gcloud auth login
-	```
-	This will prompt you to login to a gmail account. Choose the *your-name@organization.page* or *your-name@organization.com* that has been provided for you.
-	
-	Alternatively, you could also run,
-	```
-	gcloud auth login your-name@organization.page
-	```
-	and follow the login prompts. The end result is the same.
-	
-10. Next, we need to connect to the Google Cloud Server to even begin making edits.
-	For Window Users:
-	
-	```
-	cloud_sql_proxy.exe -instances="amplifyio-308412:asia-southeast1:amplify-io"=tcp:3306
->>>>>>> ded37818cbc659de6cf7f7140799ce311ff0977c
 	```
 	
 	For Mac/Linux Users:
