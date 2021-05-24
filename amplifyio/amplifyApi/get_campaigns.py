@@ -17,16 +17,15 @@
 To add campaigns, run add_campaigns.py.
 """
 
-
 import argparse
 import sys
 
 from google.ads.google_ads.client import GoogleAdsClient
 from google.ads.google_ads.errors import GoogleAdsException
 
-
-def main(client, customer_id):
+def djangoGAcampaigns(client, customer_id):
     ga_service = client.get_service("GoogleAdsService", version="v6")
+    #ga_service = client.get_service("GoogleAdsService")
 
     query = """
         SELECT campaign.id, campaign.name
@@ -34,15 +33,16 @@ def main(client, customer_id):
         ORDER BY campaign.id"""
 
     # Issues a search request using streaming.
-    response = ga_service.search_stream(customer_id, query=query)
+    response = ga_service.search_stream(customer_id=customer_id , query=query)
 
     try:
         for batch in response:
             for row in batch.results:
                 print(
-                    f"Campaign with ID {row.campaign.id} and name "
-                    f'"{row.campaign.name}" was found.'
+                    f"{row.campaign.id}, {row.campaign.name}"
+                    #f'"{row.campaign.name}" was found.'
                 )
+
     except GoogleAdsException as ex:
         print(
             f'Request with ID "{ex.request_id}" failed with status '
@@ -56,22 +56,27 @@ def main(client, customer_id):
         sys.exit(1)
 
 
-if __name__ == "__main__":
+#if __name__ == "__main__":
     # GoogleAdsClient will read the google-ads.yaml configuration file in the
     # home directory if none is specified.
-    google_ads_client = GoogleAdsClient.load_from_storage("C:\\Users\\LooWeeSing\\Desktop\\CodeProjects\\PythonProjects\\amplify-io\\amplifyio\\amplifyApi\\google-ads.yaml")
+    #google_ads_client = GoogleAdsClient.load_from_storage("C:\\Users\\Shjon\\Documents\\codingprojects\\gittut\\secret\\google-ads.yaml")
 
-    parser = argparse.ArgumentParser(
-        description="Lists all campaigns for specified customer."
-    )
-    # The following argument(s) should be provided to run the example.
-    parser.add_argument(
-        "-c",
-        "--customer_id",
-        type=str,
-        required=True,
-        help="The Google Ads customer ID.",
-    )
-    args = parser.parse_args()
+    #parser = argparse.ArgumentParser(
+    #   description="Lists all campaigns for specified customer."
+    #)
+    #The following argument(s) should be provided to run the example.
+    #parser.add_argument(
+    #   "-c",
+    #    "--customer_id",
+    #    type=str,
+    #    required=True,
+    #    help="The Google Ads customer ID.",
+    #)
+    #args = parser.parse_args()
 
-    main(google_ads_client, args.customer_id)
+    #main(google_ads_client, args.customer_id)
+
+    #google_ads_client = GoogleAdsClient.load_from_storage(version="v7")
+
+google_ads_client = GoogleAdsClient.load_from_storage("C:\\Users\\Shjon\\Documents\\codingprojects\\gittut\\secret\\google-ads.yaml")
+data = djangoGAcampaigns(google_ads_client, "1255132966")
