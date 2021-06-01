@@ -1,10 +1,12 @@
 # views.py
+from django.db.models.fields import DateField
 from django.db.models.query import QuerySet
 from rest_framework import viewsets
 from rest_framework.serializers import Serializer
-
-from .serializers import HeroSerializer, Ben_TuitionSerializer
-from .models import Hero, Ben_Tuition
+from datetime import datetime
+from rest_framework import status
+from .serializers import HeroSerializer, BenAdGroupSerializer, BenCampaignSerializer, BenMetricsSerializer
+from .models import Hero, BenCampaign, BenAdGroup, BenMetrics
 
 from django.shortcuts import render
 
@@ -15,46 +17,69 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.views.generic import DetailView
 import sys
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.authtoken.models import Token
 
-#def djangoGAC(client, customer_id):
-    #ga_service = client.get_service("GoogleAdsService", version="v6")
+def djangoGAC(client, customer_id):
+    ga_service = client.get_service("GoogleAdsService", version="v6")
 
-    #query = """
-    #SELECT ad_group.name, metrics.average_cpc, metrics.clicks, 
-    #metrics.ctr, metrics.impressions, campaign.id, campaign.name, 
-    #customer.resource_name 
-    #FROM ad_group 
-    #WHERE segments.date DURING LAST_30_DAYS """
+    query = """
+    SELECT ad_group.name, metrics.average_cpc, metrics.clicks, 
+    metrics.ctr, metrics.impressions, campaign.id, campaign.name, 
+    customer.resource_name, segments.date
+    FROM ad_group 
+    WHERE segments.date DURING LAST_30_DAYS """
 
     # Issues a search request using streaming.
-    #response = ga_service.search_stream(customer_id=customer_id , query=query)
+    response = ga_service.search_stream(customer_id=customer_id , query=query)
 
-    #try:
-        #for batch in response:
-            #for row in batch.results:
-                #Ben_Tuition.objects.create( customer_resource_name = str(row.customer.resource_name), 
-                #campaign_name = str(row.campaign.name), campaign_id = str(row.campaign.id), 
-                #ad_group_name = str(row.ad_group.name), metrics_clicks = str(row.metrics.clicks),
-                #metrics_impressions = str(row.metrics.impressions), metrics_ctr = str(row.metrics.ctr),
-                #metrics_cpc = str(row.metrics.average_cpc) )            
+    try:
+        for batch in response:
+            for row in batch.results:  
+                BenMetrics.objects.create( customer_resource_name = str(row.customer.resource_name), 
+                campaign_name = str(row.campaign.name), campaign_id = str(row.campaign.id), 
+                ad_group_name = str(row.ad_group.name), metrics_clicks = str(row.metrics.clicks),
+                metrics_impressions = str(row.metrics.impressions), metrics_ctr = str(row.metrics.ctr),
+                metrics_cpc = str(row.metrics.average_cpc), datepulled=str(row.segments.date))            
 
-    #except GoogleAdsException as ex:
-        #print(
-            #f'Request with ID "{ex.request_id}" failed with status '
-            #f'"{ex.error.code().name}" and includes the following errors:'
-        #)
-        #for error in ex.failure.errors:
-            #print(f'\tError with message "{error.message}".')
-            #if error.location:
-                #for field_path_element in error.location.field_path_elements:
-                    #print(f"\t\tOn field: {field_path_element.field_name}")
-        #sys.exit(1)
+                #BenCampaign.objects.create(customer_resource_name = str(row.customer.resource_name), 
+                #
 
-class Ben_TuitionViewSet(viewsets.ModelViewSet):
+    except GoogleAdsException as ex:
+        print(
+            f'Request with ID "{ex.request_id}" failed with status '
+            f'"{ex.error.code().name}" and includes the following errors:'
+        )
+        for error in ex.failure.errors:
+            print(f'\tError with message "{error.message}".')
+            if error.location:
+                for field_path_element in error.location.field_path_elements:
+                    print(f"\t\tOn field: {field_path_element.field_name}")
+        sys.exit(1)
+
+#class Ben_TuitionViewSet(viewsets.ModelViewSet):
     #google_ads_client = GoogleAdsClient.load_from_storage("C:\\Users\\Shjon\\Documents\\codingprojects\\gittut\\secret\\google-ads.yaml")
     #djangoGAC(google_ads_client, "1255132966")
-    queryset = Ben_Tuition.objects.all().order_by('customer_resource_name')
-    serializer_class = Ben_TuitionSerializer
+    #queryset = Ben_Tuition.objects.all().order_by['campaign_name']
+    #serializer_class = Ben_TuitionSerializer
+
+class BenCampaignViewSet(viewsets.ModelViewSet):
+    #BenMetrics.objects.all().delete()
+    queryset = BenCampaign.objects.all()
+    serializer_class = BenCampaignSerializer
+
+class BenAdGroupViewSet(viewsets.ModelViewSet):
+    #BenMetrics.objects.all().delete()
+    queryset = BenAdGroup.objects.all()
+    serializer_class = BenAdGroupSerializer
+
+class BenMetricsViewSet(viewsets.ModelViewSet):
+    #BenMetrics.objects.create(customer_resource_name= 'ben', campaign_id='23', ad_group_name='grp', metrics_cpc='1')
+    #google_ads_client = GoogleAdsClient.load_from_storage("C:\\Users\\Shjon\\Documents\\codingprojects\\gittut\\secret\\google-ads.yaml")
+    #djangoGAC(google_ads_client, "1255132966")
+    #BenMetrics.objects.all().delete()
+    queryset = BenMetrics.objects.all().order_by('datepulled')
+    serializer_class = BenMetricsSerializer
 
 
 # Create your views here.
@@ -87,5 +112,10 @@ class HeroViewSet(viewsets.ModelViewSet):
     #if queryset.filter(id=entry.id).exists(): 
         #print("Entry contained in queryset") to see if sth exist need to define entry as hero.objects.get...
     
+@api_view( ['GET'] )
+def index(request):
+    date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    message = 'server is lvie current time is'
+    return Response( data = message + date, status = status.HTTP_200_OK)
 
-    
+

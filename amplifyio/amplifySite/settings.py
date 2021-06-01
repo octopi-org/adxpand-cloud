@@ -43,7 +43,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    
 ]
+
+'''
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}'''
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -72,6 +80,8 @@ TEMPLATES = [
         },
     },
 ]
+
+AUTH_USER_MODEL = 'amplifyApi.Account'
 
 WSGI_APPLICATION = 'amplifySite.wsgi.application'
 
