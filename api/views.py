@@ -102,6 +102,7 @@ class BenMetricsViewSet(viewsets.ModelViewSet):
     ####################################################
     data = json.loads(os.getenv("SECRET_KEY_04", SECRET_KEY_04))
     data['private_key'].replace("\\n", "\n")
+    print(data)
     with open(json_key_file_path, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
     ####################################################
