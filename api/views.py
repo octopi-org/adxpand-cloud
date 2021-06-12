@@ -101,7 +101,7 @@ class BenMetricsViewSet(viewsets.ModelViewSet):
     # Include this block before calling Google Ads API # 
     ####################################################
     data = json.loads(os.getenv("SECRET_KEY_04", SECRET_KEY_04))
-    print(data)
+    data['private_key'].replace("\\n", "\n")
     with open(json_key_file_path, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
     ####################################################
