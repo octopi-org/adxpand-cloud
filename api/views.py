@@ -105,6 +105,7 @@ class BenMetricsViewSet(viewsets.ModelViewSet):
         json.dump(data, f, ensure_ascii=False, indent=4)
     ####################################################
 
+    print(credentials)
     google_ads_client = GoogleAdsClient.load_from_dict(credentials)
     # djangoGAC(google_ads_client, "1255132966")
     BenMetrics.objects.all().delete()
