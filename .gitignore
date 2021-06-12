@@ -14,6 +14,7 @@ _secrets.py
 .venv
 .apienv
 .vscode
+.vs
 
 #added
 
@@ -23,8 +24,8 @@ main.py
 noxfile_config.py
 
 # include when deploy to heroku cloud
-# Procfile
-# runtime.txt
+Procfile
+runtime.txt
 
 # User-specific files
 *.rsuser
