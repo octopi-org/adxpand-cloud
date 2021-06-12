@@ -1,7 +1,7 @@
 import os 
-from .base import * 
-# include this statment for out of the bos support with django
+# include this statment for out of the box support with django
 import django_heroku
+from .base import * 
 
 DEBUG = os.environ.get('DEBUG', None)
 if DEBUG is None:
