@@ -3,13 +3,4 @@ import os
 import django_heroku
 from .base import * 
 
-DEBUG = os.environ.get('DEBUG', None)
-if DEBUG is None:
-    DEBUG = False
-else:
-    if 'true' == DEBUG.lower():
-        DEBUG = True
-    else:
-        DEBUG = False
-
 django_heroku.settings(locals())
