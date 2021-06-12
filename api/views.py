@@ -101,13 +101,10 @@ class BenMetricsViewSet(viewsets.ModelViewSet):
     # Include this block before calling Google Ads API # 
     ####################################################
     data = json.loads(os.getenv("SECRET_KEY_04", SECRET_KEY_04))
-    #data['private_key'].replace("\\n", "\n")
-    #print(data)
     with open(json_key_file_path, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
     ####################################################
 
-    print(credentials)
     google_ads_client = GoogleAdsClient.load_from_dict(credentials)
     # djangoGAC(google_ads_client, "1255132966")
     BenMetrics.objects.all().delete()
