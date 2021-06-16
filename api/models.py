@@ -1,21 +1,12 @@
 from django.db import models
-import sys
-import os.path
-
-from django.db.models.fields import DateField 
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
+from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
 
 # Create your models here.
-class Hero(models.Model):
-    name = models.CharField(max_length=60)
-    alias = models.CharField(max_length=60)
-    campaignname = models.CharField(max_length=1000)
-    campaignid = models.CharField(max_length=1000)
-
-    def __str__(self):
-        return self.name
-
 
 class MyAccountManager(BaseUserManager):
     def create_user(self, email, username, password=None):
@@ -69,6 +60,13 @@ class Account(AbstractBaseUser, PermissionsMixin):
     def has_module_perms(self, app_label):
         return True
 
+#creates tokens for when i create a user
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)
+
+#tuition models
 class Ben_Tuition(models.Model):
     customer_resource_name = models.CharField(max_length=60)
     
@@ -95,8 +93,3 @@ class BenMetrics(BenAdGroup):
     metrics_cpc = models.CharField(max_length=60)
     datepulled = models.CharField(max_length=20)
 
-    #class Meta(BenAdGroup.Meta):
-        #ordering = ['eachdate']
-
-#def __str__(self):
-    #return self.customer_resource_name          

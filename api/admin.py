@@ -1,8 +1,7 @@
 from django.contrib import admin
-from .models import BenAdGroup, BenCampaign, BenMetrics, Hero, Account
+from .models import BenAdGroup, BenCampaign, BenMetrics, Account
 
 # Register your models here.
-admin.site.register(Hero)
 admin.site.register(Account)
 admin.site.register(BenMetrics)
 admin.site.register(BenAdGroup)
