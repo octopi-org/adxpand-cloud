@@ -11,6 +11,7 @@ env
 betatest_key.json
 GoogleCLoudSDKInstaller
 _secrets.py
+key.json
 .venv
 .apienv
 .vscode
