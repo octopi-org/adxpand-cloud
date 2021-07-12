@@ -1,13 +1,20 @@
 import os
 import json
-from rest_framework import viewsets
+from django.http.request import HttpRequest
+from django.http.response import HttpResponse, HttpResponseBadRequest
+from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.authtoken.views import ObtainAuthToken
 from .serializers import BenAdGroupSerializer, BenCampaignSerializer, BenMetricsSerializer
 from .models import BenCampaign, BenAdGroup, BenMetrics
 from .GAfunctions import djangoGA_json
+from .generate_keyword_ideas import Gen_kw_ideas, map_keywords_to_string_values, _map_locations_ids_to_resource_names
+from .add_keyword_plan import GA_add_kw_plan
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from django.http import JsonResponse
+from django.views import View
+import requests
 
 from google.ads.googleads.client import GoogleAdsClient
 from google.ads.googleads.errors import GoogleAdsException
@@ -81,7 +88,7 @@ class BenMetricsViewSet(viewsets.ModelViewSet):
 
 #this is for GA stuff
 @api_view(['GET'])
-#@permission_classes( [ AllowAny ] )
+@permission_classes( [ AllowAny ] )
 def GAlist(request):
     if request.method == 'GET':
         data = json.loads(os.getenv("SECRET_KEY_04", SECRET_KEY_04))
@@ -89,8 +96,8 @@ def GAlist(request):
             json.dump(data, f, ensure_ascii=False, indent=4)
 
         google_ads_client = GoogleAdsClient.load_from_dict(credentials)
-        GAjsonstr = djangoGA_json(google_ads_client, "1255132966")
-        #GAjsonstr = 'test first'
+        #GAjsonstr = djangoGA_json(google_ads_client, "1255132966")
+        GAjsonstr = 'test first'
 
         if os.path.exists(json_key_file_path):
             print('KEYS has been deleted')
@@ -107,4 +114,47 @@ def GAlist(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 '''
-#
+
+@api_view( ['GET'] )
+@permission_classes( [AllowAny])
+def index(request):
+    if request.method == 'GET':
+        data = json.loads(os.getenv("SECRET_KEY_04", SECRET_KEY_04))
+        with open(json_key_file_path, 'w', encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, indent=4)
+
+        #googleads_client = GoogleAdsClient.load_from_dict(credentials)
+        data1 = GA_add_kw_plan(
+            client=GoogleAdsClient.load_from_dict(credentials),
+            customer_id="1255132966" )
+        
+
+        if os.path.exists(json_key_file_path):
+            print('KEYS has been deleted')
+            os.remove(json_key_file_path)
+        else:
+            print("KEYS don't exist")
+
+    return Response( data1)
+
+class AppGetView(View):
+    info='test'
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponse(self.info ,status=status.HTTP_200_OK)
+        #info = request.GET
+        #except json.decoder.JSONDecodeError:
+            #return JsonResponse('{"no image": "no image was supplised"}')
+        #return Response(info, status=status.HTTP_404_NOT_FOUND)
+
+'''
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return HttpResponseForbidden()
+
+        # Look up the author we're interested in.
+        self.object = self.get_object()
+        # Actually record interest somehow here!
+
+        return HttpResponseRedirect(reverse('author-detail', kwargs={'pk': self.object.pk}))
+        '''
