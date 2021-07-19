@@ -7,14 +7,17 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.authtoken.views import ObtainAuthToken
 from .serializers import BenAdGroupSerializer, BenCampaignSerializer, BenMetricsSerializer
-from .models import BenCampaign, BenAdGroup, BenMetrics
+from .models import BenCampaign, BenAdGroup, BenMetrics, MyAccountManager, Account
 from .GAfunctions import djangoGA_json
 from .generate_keyword_ideas import Gen_kw_ideas, map_keywords_to_string_values, _map_locations_ids_to_resource_names
 from .add_keyword_plan import GA_add_kw_plan
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.http import JsonResponse
 from django.views import View
-import requests
+from .phoneapps import phonelogin
+
+from django.contrib.auth import get_user_model
+
 
 from google.ads.googleads.client import GoogleAdsClient
 from google.ads.googleads.errors import GoogleAdsException
@@ -137,16 +140,14 @@ def index(request):
 
     return Response( data1)
 
+'''
+@permission_classes([AllowAny])
 class AppGetView(View):
     info='test'
 
     def get(self, request, *args, **kwargs):
         return HttpResponse(self.info ,status=status.HTTP_200_OK)
-        #info = request.GET
-        #except json.decoder.JSONDecodeError:
-            #return JsonResponse('{"no image": "no image was supplised"}')
-        #return Response(info, status=status.HTTP_404_NOT_FOUND)
-
+'''
 '''
     def post(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
@@ -158,3 +159,11 @@ class AppGetView(View):
 
         return HttpResponseRedirect(reverse('author-detail', kwargs={'pk': self.object.pk}))
         '''
+
+@permission_classes([AllowAny])
+class AppGetView(View):
+    
+    def get(self, request, *args, **kwargs):
+        informa = phonelogin(request)
+        print(informa)
+        return HttpResponse(informa ,status=status.HTTP_200_OK)
