@@ -14,7 +14,7 @@ from .add_keyword_plan import GA_add_kw_plan
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.http import JsonResponse
 from django.views import View
-from .phoneapps import phonelogin
+from .phoneapps import phonelogin, phoneregisteraccount
 
 from django.contrib.auth import get_user_model
 
@@ -118,6 +118,8 @@ def GAlist(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 '''
 
+
+
 @api_view( ['GET'] )
 @permission_classes( [AllowAny])
 def index(request):
@@ -139,6 +141,9 @@ def index(request):
             print("KEYS don't exist")
 
     return Response( data1)
+
+
+
 
 '''
 @permission_classes([AllowAny])
@@ -162,8 +167,13 @@ class AppGetView(View):
 
 @permission_classes([AllowAny])
 class AppGetView(View):
-    
+
     def get(self, request, *args, **kwargs):
         informa = phonelogin(request)
         print(informa)
         return HttpResponse(informa ,status=status.HTTP_200_OK)
+
+    def post(self, request, *args, **kwargs):
+        inform = phoneregisteraccount(request)
+        print(inform)
+        return HttpResponse(inform, status=status.HTTP_200_OK)

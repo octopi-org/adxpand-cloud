@@ -1,63 +1,55 @@
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse
 import json
+from django.contrib.auth.hashers import check_password
+from .link_manage_to_cus import link_manager_to_client
+from .models import Account, MyAccountManager, History
+from .campaign_methods import update_campaign, add_campaign
+from .keyword_methods import update_keywords, add_keywords
+from .GAfunctions import phone_login_GA_helper
 
-from .models import Account, MyAccountManager, 
 
 
-
-'''
 def phoneregisteraccount(account):
     #the app will post data to us,
     try:
         if account.method == 'POST':
-            
             email1 = account.POST['email']
             password1 = account.POST['password']
             username1 = account.POST['username']
-            accountmodel = get_user_model()
-            create_newuser = accountmodel.objects.create_user(
+
+            create_new_user_acc = Account.objects.create_user(
                 email = email1, 
-                password = password1,    
                 username = username1,
+                password = password1,    
                 )
+            create_new_user_acc.save()
+            print(create_new_user_acc)
             return JsonResponse({'status':'success'})
     except:
         return JsonResponse({"status": "failed"})
-'''
+
 
 def phonelogin(info):
     try:
         if info.method == 'GET':
             email1 = info.GET['email']
-            #password1 = info.GET['password']
+            password1 = info.GET['password']
             username1 = info.GET['username']
             try:
                 grabexisting_acc = Account.objects.get( 
                     email = str(email1), 
-                    #password = str(password1), 
                     username = str(username1),
                     )
                 
-                return grabexisting_acc
+                check_pw = Account.objects.get(email = str(email1)).check_password(password1)
+                
+                #phone_login_GA_helper()
+                return JsonResponse({'status':'success'})
             except:  
-                return 'acc not found'   
+                return JsonResponse({'status':'acc not found'})   
     except:
-        return str('failed')
-
-'''
-            if check == info:
-                #insert method to get 12 pieces of info 
-                #Clicks, CTR, CPC, Impressions, Search Impression Share, 
-                # Search Exact Match Impression Share, Search Lost Impression Share (Rank), 
-                # Search Lost Impression Share (Budget), Display Lost Impression Share (Rank), 
-                # Display Lost Impression Share (Budget), Conversion Rate, Cost
-                data = 'insert method here'
-                response = json.dumps(data)
-                #return data in dict form
-            return JsonResponse(response)
-          '''  
-    
+        return str({'status':'failed'})
 
 
 def newcampaignbutton(info):
@@ -71,31 +63,42 @@ def newcampaignbutton(info):
             keywords_1 = str(info.POST['Keywords'])
             budget_1 = str(info.POST['Budget'])
             location_1 = str(info.POST['Location'])
+            #add_campaign(client, customer_id)
+
+            #need to add to 3 models
             #Ben_Tuition.objects.create()
-            #needto create GA fn 
+            
             return JsonResponse({'campaign':'campaign created'})
     except:
         return JsonResponse({'status':'failed'})
 
+
 def editcampaignbutton(info):
     try:
         if info.method == 'POST':
+            
             campaign1 = str(info.POST['Campaign'])
             ad_grp_1 = str(info.POST['Ad Group'])
             ad_name_1 = str(info.POST['Ad Name'])
             ad_title_1 = str(info.POST['Ad Title'])
             ad_describ_1 = str(info.POST['Ad Description'])
-            keywords_1 = str(info.POST['Keywords'])
+            kw_to_add_1 = str(info.POST['Keywords_To_Add'])
+            kw_to_del_1 = str(info.POST['Keywords_To_Del'])
+            neg_kw_to_add_1 = str(info.POST['Negative_Keywords_To_Add'])
+            neg_kw_to_del_1 = str(info.POST['Negative_Keywords_To_Del'])
             budget_1 = str(info.POST['Budget'])
             location_1 = str(info.POST['Location'])
-            #need to create GA fn
+            #update_campaign(client, customer_id, campaign_id)
+            #update_keywords(client, customer_id, ad_group_id, criterion_id)
+            
+            #update into all 3 models
             #Ben_Tuition.objects.update_or_create(
             #)
             return JsonResponse({'campaign':'campaign edited'})
     except:
         return JsonResponse({'status':'failed'})
     
-        
+'''
 def kwrequestbutton(info):
     try:
         if info.method == 'GET':
@@ -104,13 +107,13 @@ def kwrequestbutton(info):
 
     except:
         return JsonResponse({'status':'failed'})
-
+'''
 
 
 def get_change_history(info):
     try:
         if info.method == 'GET':
-            History_Objects = History.objects.all()
+            History_Objects = History.objects.get('eeee')
             dict_of_hist_objs = json.dumps(History_Objects)
             #need GA method
             return JsonResponse(dict_of_hist_objs)
@@ -120,8 +123,8 @@ def get_change_history(info):
 def connect_google_acc(info):
     try:
         if info.method == 'POST':
-            info.POST['Customer Id']
-            #link_manage_to_cus.py
+            cus_id = info.POST['Customer Id']
+            link_manager_to_client(cus_id)
             return JsonResponse({'status':'linked'})
     except:
         return JsonResponse({'status':'failed'}) 

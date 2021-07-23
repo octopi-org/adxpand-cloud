@@ -125,7 +125,7 @@ def _handle_googleads_exception(exception):
 
 
 
-    
+'''
 try:
     link_manager_to_client(
         client=GoogleAdsClient.load_from_dict(credentials),
@@ -134,3 +134,4 @@ try:
         )
 except GoogleAdsException as ex:
     _handle_googleads_exception(ex)
+'''
