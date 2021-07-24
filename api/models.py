@@ -60,6 +60,13 @@ class Account(AbstractBaseUser, PermissionsMixin):
     def has_module_perms(self, app_label):
         return True
 
+class History(models.Model):
+    name = models.CharField(max_length=60)
+    acc = models.ForeignKey(Account, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
 #creates tokens for when i create a user
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_auth_token(sender, instance=None, created=False, **kwargs):

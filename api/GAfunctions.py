@@ -21,7 +21,7 @@ def djangoGAC(client, customer_id):
     try:
         for batch in response:
             for row in batch.results:  
-                BenMetrics.objects.create( customer_resource_name = str(row.customer.resource_name), 
+                Ben_Metrics.objects.create( customer_resource_name = str(row.customer.resource_name), 
                 campaign_name = str(row.campaign.name), campaign_id = str(row.campaign.id), 
                 ad_group_name = str(row.ad_group.name), metrics_clicks = str(row.metrics.clicks),
                 metrics_impressions = str(row.metrics.impressions), metrics_ctr = str(row.metrics.ctr),
@@ -88,6 +88,70 @@ def djangoGA_json(client, customer_id):
                 #strobject = "{"+"customername:{crn},"+"campaign_name:{cn},"+"campaign_id:{ci},"+"ad_group_name:{agn},"+"metrics_clicks:{mc},"+"metrics_impressions:{mi},"+"metrics_ctr:{mctr},"+"metrics_cpc:{mcpc},"+"datepulled:{dp}"+"}".format(crn = customer_resource_name, cn = campaign_name, ci = campaign_id, agn = ad_group_name, 
                 #mc = metrics_clicks, mi = metrics_impressions, mctr = metrics_ctr, mcpc = metrics_cpc, dp = datepulled)
                 jsonlistobject.append( dictsample )
+        json_formatted_dict = { 
+            'data':jsonlistobject
+        }
+        json_formatted_str = json.dumps(json_formatted_dict)
+        return json_formatted_str
+
+    except GoogleAdsException as ex:
+        print(
+            f'Request with ID "{ex.request_id}" failed with status '
+            f'"{ex.error.code().name}" and includes the following errors:'
+        )
+        for error in ex.failure.errors:
+            print(f'\tError with message "{error.message}".')
+            if error.location:
+                for field_path_element in error.location.field_path_elements:
+                    print(f"\t\tOn field: {field_path_element.field_name}")
+        sys.exit(1)
+
+
+
+def phone_login_GA_helper(client, customer_id):
+    ga_service = client.get_service("GoogleAdsService", version="v6")
+
+    query = """
+    SELECT metrics.search_impression_share, 
+    metrics.search_exact_match_impression_share, 
+    metrics.search_rank_lost_impression_share, 
+    metrics.search_budget_lost_top_impression_share, 
+    metrics.search_budget_lost_absolute_top_impression_share, 
+    metrics.all_conversions_from_interactions_rate, 
+    metrics.cost_micros, customer.resource_name
+    FROM ad_group 
+    WHERE segments.date DURING LAST_30_DAYS """
+
+    # Issues a search request using streaming.
+    response = ga_service.search_stream(customer_id=customer_id , query=query)
+
+    try:
+        jsonlistobject = []
+        for batch in response:
+            for row in batch.results:  
+                search_impres_share = (row.metrics.search_impression_share)
+                search_exact_match_impres_share = (row.metrics.search_exact_match_impression_share) 
+                search_rank_lost_impres_share = (row.metrics.search_rank_lost_impression_share)
+                search_budget_lost_top_impres_share = (row.metrics.search_budget_lost_top_impression_share)
+                search_budget_lost_abs_top_impres_share = (row.metrics.search_budget_lost_absolute_top_impression_share) 
+                all_conversions_from_int_rate = (row.metrics.all_conversions_from_interactions_rate) 
+                customer_resource_name = str(row.customer.resource_name) 
+                datepulled = str(row.segments.date)  
+                
+                dictsample = {
+                    'search_impression_share' : search_impres_share,
+                    'search_exact_match_impression_share' : search_exact_match_impres_share,
+                    'search_rank_lost_impression_share' : search_rank_lost_impres_share,
+                    'search_budget_lost_top_impression_share' : search_budget_lost_top_impres_share,
+                    'search_budget_lost_absolute_top_impression_share' : search_budget_lost_abs_top_impres_share,
+                    'all_conversions_from_int_rate' : all_conversions_from_int_rate,
+                    'datepulled' : datepulled,
+                    'customername' : customer_resource_name,  
+                } 
+                #strobject = "{"+"customername:{crn},"+"campaign_name:{cn},"+"campaign_id:{ci},"+"ad_group_name:{agn},"+"metrics_clicks:{mc},"+"metrics_impressions:{mi},"+"metrics_ctr:{mctr},"+"metrics_cpc:{mcpc},"+"datepulled:{dp}"+"}".format(crn = customer_resource_name, cn = campaign_name, ci = campaign_id, agn = ad_group_name, 
+                #mc = metrics_clicks, mi = metrics_impressions, mctr = metrics_ctr, mcpc = metrics_cpc, dp = datepulled)
+                jsonlistobject.append( dictsample )
+        
         json_formatted_dict = { 
             'data':jsonlistobject
         }
