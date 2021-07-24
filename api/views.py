@@ -15,10 +15,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.http import JsonResponse
 from django.views import View
 from .phoneapps import phonelogin, phoneregisteraccount
-
 from django.contrib.auth import get_user_model
-
-
 from google.ads.googleads.client import GoogleAdsClient
 from google.ads.googleads.errors import GoogleAdsException
 
