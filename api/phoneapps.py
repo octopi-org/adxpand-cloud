@@ -10,6 +10,27 @@ from .keyword_methods import update_keywords, add_keywords
 from .GAfunctions import phone_login_GA_helper
 from .views import credentials, GoogleAdsClient, GoogleAdsException
 
+# Google Ads API credentials masking
+try:
+    import cloud.settings._secrets as secure
+    SECRET_KEY_02 = secure.SECRET_KEY_02
+    SECRET_KEY_03 = secure.SECRET_KEY_03
+    SECRET_KEY_04 = secure.SECRET_KEY_04
+    SECRET_KEY_05 = secure.SECRET_KEY_05
+except ImportError:
+    SECRET_KEY_02 = "error_token"
+    SECRET_KEY_03 = "error_token"
+    SECRET_KEY_04 = "error_token"
+    SECRET_KEY_05 = "error_token"
+
+json_key_file_path = 'key.json'
+
+credentials = {
+    "developer_token": os.getenv("SECRET_KEY_02", SECRET_KEY_02),
+    "login_customer_id": os.getenv("SECRET_KEY_03", SECRET_KEY_03),
+    "json_key_file_path": json_key_file_path,
+    "impersonated_email": os.getenv("SECRET_KEY_05", SECRET_KEY_05)
+}
 
 def phoneregisteraccount(account):
     #the app will post data to us,
