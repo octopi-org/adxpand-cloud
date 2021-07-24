@@ -8,13 +8,13 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.authtoken.views import ObtainAuthToken
 from .serializers import BenAdGroupSerializer, BenCampaignSerializer, BenMetricsSerializer
 from .models import BenCampaign, BenAdGroup, BenMetrics, MyAccountManager, Account
-from .GAfunctions import djangoGA_json
+from .GAfunctions import djangoGA_json, phone_login_GA_helper
 from .generate_keyword_ideas import Gen_kw_ideas, map_keywords_to_string_values, _map_locations_ids_to_resource_names
 from .add_keyword_plan import GA_add_kw_plan
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.http import JsonResponse
 from django.views import View
-from .phoneapps import phone_login_successful, phonelogin, phoneregisteraccount
+from .phoneapps import phonelogin, phoneregisteraccount
 
 from django.contrib.auth import get_user_model
 
@@ -165,9 +165,6 @@ class AppGetView(View):
         return HttpResponseRedirect(reverse('author-detail', kwargs={'pk': self.object.pk}))
         '''
 
-
-#google_ads_client = GoogleAdsClient.load_from_dict(credentials)
-#return_str = phone_login_GA_helper(google_ads_client, "1255132966")
 
 @permission_classes([AllowAny])
 class AppGetView(View):
