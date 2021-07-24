@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.http import JsonResponse
 import json
 from django.contrib.auth.hashers import check_password
+from google.ads.googleads import client
 from .link_manage_to_cus import link_manager_to_client
 from .models import Account, MyAccountManager, History
 from .campaign_methods import update_campaign, add_campaign
@@ -24,7 +25,7 @@ def phoneregisteraccount(account):
                 password = password1,    
                 )
             create_new_user_acc.save()
-            print(create_new_user_acc)
+            #print(create_new_user_acc)
             return JsonResponse({'status':'success'})
     except:
         return JsonResponse({"status": "failed"})
@@ -35,21 +36,20 @@ def phonelogin(info):
         if info.method == 'GET':
             email1 = info.GET['email']
             password1 = info.GET['password']
-            username1 = info.GET['username']
+            #username1 = info.GET['username']
             try:
                 grabexisting_acc = Account.objects.get( 
                     email = str(email1), 
-                    username = str(username1),
+                    
                     )
                 
                 check_pw = Account.objects.get(email = str(email1)).check_password(password1)
-                
-                #phone_login_GA_helper()
-                return JsonResponse({'status':'success'})
+                if check_pw == True:
+                    return JsonResponse({'status':'success'})
             except:  
-                return JsonResponse({'status':'acc not found'})   
+                return JsonResponse({'status':'failed'})   
     except:
-        return str({'status':'failed'})
+        return JsonResponse({'status':'failed'})
 
 
 def newcampaignbutton(info):
@@ -113,9 +113,9 @@ def kwrequestbutton(info):
 def get_change_history(info):
     try:
         if info.method == 'GET':
-            History_Objects = History.objects.get('eeee')
+            History_Objects = History.objects.all()
             dict_of_hist_objs = json.dumps(History_Objects)
-            #need GA method
+            
             return JsonResponse(dict_of_hist_objs)
     except:
         return JsonResponse({'status':'failed'}) 
@@ -124,8 +124,10 @@ def connect_google_acc(info):
     try:
         if info.method == 'POST':
             cus_id = info.POST['Customer Id']
-            link_manager_to_client(cus_id)
-            return JsonResponse({'status':'linked'})
+            return_str_manager_id = link_manager_to_client(customer_id= cus_id, manager_customer_id= '1__')
+            Account.objects.filter(str(username)).update(manager_id= return_str_manager_id)
+            
+            return JsonResponse({'status':'success'})
     except:
         return JsonResponse({'status':'failed'}) 
             

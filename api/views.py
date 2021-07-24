@@ -14,7 +14,7 @@ from .add_keyword_plan import GA_add_kw_plan
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.http import JsonResponse
 from django.views import View
-from .phoneapps import phonelogin, phoneregisteraccount
+from .phoneapps import phone_login_successful, phonelogin, phoneregisteraccount
 
 from django.contrib.auth import get_user_model
 
@@ -164,6 +164,10 @@ class AppGetView(View):
 
         return HttpResponseRedirect(reverse('author-detail', kwargs={'pk': self.object.pk}))
         '''
+
+
+#google_ads_client = GoogleAdsClient.load_from_dict(credentials)
+#return_str = phone_login_GA_helper(google_ads_client, "1255132966")
 
 @permission_classes([AllowAny])
 class AppGetView(View):

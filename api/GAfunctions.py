@@ -146,10 +146,8 @@ def phone_login_GA_helper(client, customer_id):
                     'search_budget_lost_absolute_top_impression_share' : search_budget_lost_abs_top_impres_share,
                     'all_conversions_from_int_rate' : all_conversions_from_int_rate,
                     'datepulled' : datepulled,
-                    'customername' : customer_resource_name,
-                    
+                    'customername' : customer_resource_name,  
                 } 
-
                 #strobject = "{"+"customername:{crn},"+"campaign_name:{cn},"+"campaign_id:{ci},"+"ad_group_name:{agn},"+"metrics_clicks:{mc},"+"metrics_impressions:{mi},"+"metrics_ctr:{mctr},"+"metrics_cpc:{mcpc},"+"datepulled:{dp}"+"}".format(crn = customer_resource_name, cn = campaign_name, ci = campaign_id, agn = ad_group_name, 
                 #mc = metrics_clicks, mi = metrics_impressions, mctr = metrics_ctr, mcpc = metrics_cpc, dp = datepulled)
                 jsonlistobject.append( dictsample )
