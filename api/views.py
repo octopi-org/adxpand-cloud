@@ -14,7 +14,7 @@ from .add_keyword_plan import GA_add_kw_plan
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.http import JsonResponse
 from django.views import View
-from .phoneapps import phone_login_successful, phonelogin, phoneregisteraccount
+from .phoneapps import phonelogin, phoneregisteraccount
 
 from django.contrib.auth import get_user_model
 
