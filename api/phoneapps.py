@@ -8,7 +8,7 @@ from .models import Account, MyAccountManager, History
 from .campaign_methods import update_campaign, add_campaign
 from .keyword_methods import update_keywords, add_keywords
 from .GAfunctions import phone_login_GA_helper
-from .views import credentials, GoogleAdsClient, GoogleAdsException
+from .views import GoogleAdsClient, GoogleAdsException
 
 # Google Ads API credentials masking
 try:
