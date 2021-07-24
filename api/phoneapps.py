@@ -8,7 +8,7 @@ from .models import Account, MyAccountManager, History
 from .campaign_methods import update_campaign, add_campaign
 from .keyword_methods import update_keywords, add_keywords
 from .GAfunctions import phone_login_GA_helper
-
+from .views import credentials, GoogleAdsClient, GoogleAdsException
 
 
 def phoneregisteraccount(account):
@@ -45,7 +45,9 @@ def phonelogin(info):
                 
                 check_pw = Account.objects.get(email = str(email1)).check_password(password1)
                 if check_pw == True:
-                    return JsonResponse({'status':'success'})
+                    google_ads_client = GoogleAdsClient.load_from_dict(credentials)
+                    new_dict = phone_login_GA_helper(google_ads_client ,"1255132966")
+                    return JsonResponse(new_dict)
             except:  
                 return JsonResponse({'status':'failed'})   
     except:
@@ -124,8 +126,8 @@ def connect_google_acc(info):
     try:
         if info.method == 'POST':
             cus_id = info.POST['Customer Id']
-            return_str_manager_id = link_manager_to_client(customer_id= cus_id, manager_customer_id= '1__')
-            Account.objects.filter(str(username)).update(manager_id= return_str_manager_id)
+            #return_str_manager_id = link_manager_to_client(customer_id= cus_id, manager_customer_id= '1__')
+            #Account.objects.filter(str(username)).update(manager_id= return_str_manager_id)
             
             return JsonResponse({'status':'success'})
     except:
