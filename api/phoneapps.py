@@ -68,8 +68,28 @@ def phonelogin(info):
                 
                 check_pw = Account.objects.get(email = str(email1)).check_password(password1)
                 if check_pw == True:
+
+                    ##################################################################################
+                    # Include this block before calling Google Ads API DONT DELETE GOOD EG REFERENCE # 
+                    ##################################################################################
+                    data = json.loads(os.getenv("SECRET_KEY_04", SECRET_KEY_04))
+                    with open(json_key_file_path, 'w', encoding='utf-8') as f:
+                        json.dump(data, f, ensure_ascii=False, indent=4)
+                    ####################################################
+
                     google_ads_client = GoogleAdsClient.load_from_dict(credentials)
                     new_dict = phone_login_GA_helper(google_ads_client ,"1255132966")
+
+                    #######################################################
+                    # Include this block after calling the Google Ads Api #
+                    #######################################################
+                    if os.path.exists(json_key_file_path):
+                        print('KEYS has been deleted')
+                        os.remove(json_key_file_path)
+                    else:
+                        print("KEYS don't exist")
+                    #######################################################
+
                     return JsonResponse(new_dict)
             except:  
                 return JsonResponse({'status':'failed'})   
