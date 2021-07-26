@@ -84,7 +84,7 @@ def djangoGA_json(client, customer_id):
                     'metrics_cpc' : metrics_cpc,
                     'datepulled' : datepulled
                 } 
-
+#
                 #strobject = "{"+"customername:{crn},"+"campaign_name:{cn},"+"campaign_id:{ci},"+"ad_group_name:{agn},"+"metrics_clicks:{mc},"+"metrics_impressions:{mi},"+"metrics_ctr:{mctr},"+"metrics_cpc:{mcpc},"+"datepulled:{dp}"+"}".format(crn = customer_resource_name, cn = campaign_name, ci = campaign_id, agn = ad_group_name, 
                 #mc = metrics_clicks, mi = metrics_impressions, mctr = metrics_ctr, mcpc = metrics_cpc, dp = datepulled)
                 jsonlistobject.append( dictsample )
