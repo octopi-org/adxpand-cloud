@@ -15,10 +15,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.http import JsonResponse
 from django.views import View
 from .phoneapps import phonelogin, phoneregisteraccount
-
 from django.contrib.auth import get_user_model
-
-
 from google.ads.googleads.client import GoogleAdsClient
 from google.ads.googleads.errors import GoogleAdsException
 
@@ -64,9 +61,10 @@ class BenAdGroupViewSet(viewsets.ModelViewSet):
 
 
 class BenMetricsViewSet(viewsets.ModelViewSet):
-    ####################################################
+
+    ##################################################################################
     # Include this block before calling Google Ads API DONT DELETE GOOD EG REFERENCE # 
-    ####################################################
+    ##################################################################################
     data = json.loads(os.getenv("SECRET_KEY_04", SECRET_KEY_04))
     with open(json_key_file_path, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
@@ -86,8 +84,7 @@ class BenMetricsViewSet(viewsets.ModelViewSet):
         os.remove(json_key_file_path)
     else:
         print("KEYS don't exist")
-    ###############################################################################
-
+    #######################################################
 
 #this is for GA stuff
 @api_view(['GET'])
