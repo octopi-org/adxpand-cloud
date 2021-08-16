@@ -28,7 +28,12 @@ from google.api_core import protobuf_helpers
 _DATE_FORMAT = "%Y%m%d"
 
 #create new campaign
-def add_campaign(client, customer_id):
+def add_campaign(client, customer_id, choose_campaign_name, choose_budget_amt):
+    #my added parameters
+    final_budget_amt = int(choose_budget_amt)
+    final_camp_name = choose_campaign_name
+    
+
     campaign_budget_service = client.get_service("CampaignBudgetService")
     campaign_service = client.get_service("CampaignService")
 
@@ -36,12 +41,13 @@ def add_campaign(client, customer_id):
     # Create a budget, which can be shared by multiple campaigns.
     campaign_budget_operation = client.get_type("CampaignBudgetOperation")
     campaign_budget = campaign_budget_operation.create
-    campaign_budget.name = f"Interplanetary Budget {uuid.uuid4()}"
+    campaign_budget.name = f"{final_camp_name} Budget {uuid.uuid4()}"
     campaign_budget.delivery_method = (
         client.enums.BudgetDeliveryMethodEnum.STANDARD
     )
     #may need to edit this part here.
-    campaign_budget.amount_micros = 500000
+    #campaign_budget.amount_micros = 500000
+    campaign_budget.amount_micros = final_budget_amt
 
     # Add budget.
     try:
@@ -58,7 +64,7 @@ def add_campaign(client, customer_id):
     # Create campaign.
     campaign_operation = client.get_type("CampaignOperation")
     campaign = campaign_operation.create
-    campaign.name = f"Interplanetary Cruise {uuid.uuid4()}"
+    campaign.name = f"{final_camp_name} {uuid.uuid4()}"
     campaign.advertising_channel_type = (
         client.enums.AdvertisingChannelTypeEnum.SEARCH
     )
@@ -92,7 +98,8 @@ def add_campaign(client, customer_id):
         campaign_response = campaign_service.mutate_campaigns(
             customer_id=customer_id, operations=[campaign_operation]
         )
-        print(f"Created campaign {campaign_response.results[0].resource_name}.")
+        print(f"Created campaign {campaign_response.results[0].resource_name}. {campaign.id} ")
+        return(str(campaign.id))
     except GoogleAdsException as ex:
         _handle_googleads_exception(ex)
 
@@ -108,6 +115,7 @@ def _handle_googleads_exception(exception):
             for field_path_element in error.location.field_path_elements:
                 print(f"\t\tOn field: {field_path_element.field_name}")
     sys.exit(1)
+
 
 
 #update campaign, only updates campaign resource name
