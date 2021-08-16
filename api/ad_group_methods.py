@@ -24,6 +24,8 @@ from google.ads.googleads.client import GoogleAdsClient
 from google.ads.googleads.errors import GoogleAdsException
 from google.api_core import protobuf_helpers
 
+_DEFAULT_PAGE_SIZE = 1000
+
 
 def create_ad_group(client, customer_id, campaign_id, choose_ad_grp_name):
     #my added fields
@@ -85,3 +87,38 @@ def update_ad_group(client, customer_id, ad_group_id, cpc_bid_micro_amount):
     parser.add_argument("-c","--customer_id", type=str, required=True, help="The Google Ads customer ID.",)
     parser.add_argument("-a", "--ad_group_id", type=str, required=True, help="The ad group ID.")
     parser.add_argument( "-b", "--cpc_bid_micro_amount", type=int, required=True, help="The cpc bid micro amount.")   '''
+
+
+
+
+def get_ad_group(client, customer_id, page_size, campaign_id=None):
+    ga_service = client.get_service("GoogleAdsService")
+
+    query = """
+        SELECT
+          campaign.id,
+          ad_group.id,
+          ad_group.name
+        FROM ad_group"""
+
+    if campaign_id:
+        query += f" WHERE campaign.id = {campaign_id}"
+
+    search_request = client.get_type("SearchGoogleAdsRequest")
+    search_request.customer_id = customer_id
+    search_request.query = query
+    search_request.page_size = _DEFAULT_PAGE_SIZE
+
+    results = ga_service.search(request=search_request)
+
+    for row in results:
+        print(
+            f"Ad group with ID {row.ad_group.id} and name "
+            f'"{row.ad_group.name}" was found in campaign with '
+            f"ID {row.campaign.id}."
+        )
+
+'''
+    parser = argparse.ArgumentParser( description="List ad groups for specified customer.")
+    parser.add_argument("-c","--customer_id",type=str,required=True,help="The Google Ads customer ID.".)
+    parser.add_argument("-i","--campaign_id",type=str,required=False,help=("The campaign ID. Specify this to list ad groups " "solely for this campaign ID."),)'''
