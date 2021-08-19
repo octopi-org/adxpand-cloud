@@ -57,12 +57,15 @@ parser.add_argument("-i", "--campaign_id", type=str, required=True, help="The ca
 
 
 # [START update_ad_group]
-def update_ad_group(client, customer_id, ad_group_id, cpc_bid_micro_amount):
+def update_ad_group(client, customer_id, ad_group_id, cpc_bid_micro_amount, edit_ad_grp_name):
+    final_ad_grp_name = str(edit_ad_grp_name)
+
     ad_group_service = client.get_service("AdGroupService")
 
     # Create ad group operation.
     ad_group_operation = client.get_type("AdGroupOperation")
     ad_group = ad_group_operation.update
+    ad_group.name = final_ad_grp_name #added line #works
     ad_group.resource_name = ad_group_service.ad_group_path(
         customer_id, ad_group_id
     )
@@ -79,6 +82,7 @@ def update_ad_group(client, customer_id, ad_group_id, cpc_bid_micro_amount):
     )
 
     print(f"Updated ad group {ad_group_response.results[0].resource_name}.")
+    return {'status': ad_group_response.results[0].resource_name}
     # [END update_ad_group]
 
 
@@ -87,9 +91,6 @@ def update_ad_group(client, customer_id, ad_group_id, cpc_bid_micro_amount):
     parser.add_argument("-c","--customer_id", type=str, required=True, help="The Google Ads customer ID.",)
     parser.add_argument("-a", "--ad_group_id", type=str, required=True, help="The ad group ID.")
     parser.add_argument( "-b", "--cpc_bid_micro_amount", type=int, required=True, help="The cpc bid micro amount.")   '''
-
-
-
 
 def get_ad_group(client, customer_id, page_size, campaign_id=None):
     ga_service = client.get_service("GoogleAdsService")

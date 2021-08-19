@@ -97,8 +97,8 @@ def add_expanded_text_ads(client, customer_id, ad_group_id, number_of_ads,
 
     for result in ad_group_ad_response.results:
         print(f'Created ad group ad "{result.resource_name}".')
-        str_ad_grp_id = f'Created ad group ad "{result.resource_name}".'
-    return str_ad_grp_id
+        str_ad_id = f'Created ad group ad "{result.resource_name}".'
+    return str_ad_id
     # [END add_expanded_text_ads]
 
 '''
@@ -150,7 +150,6 @@ def get_expanded_text_ad(client, customer_id, ad_group_id=None):
     parser.add_argument("-a","--ad_group_id",type=str,required=False,help="The ad group ID. ",)
     '''
 
-
 '''ad_headline_1, ad_headline_2, 
     ad_headline_3, ad_desc_1, ad_desc_2):
     update_ad_head_1 = str(ad_headline_1)
@@ -161,7 +160,7 @@ def get_expanded_text_ad(client, customer_id, ad_group_id=None):
 
 
 #update expanded text ad
-def update_expanded_text_ad(client, customer_id, ad_id ):
+def update_expanded_text_ad(client, customer_id, ad_id):
     
 
     ad_service = client.get_service("AdService")
@@ -195,8 +194,6 @@ def update_expanded_text_ad(client, customer_id, ad_id ):
     # The following argument(s) should be provided to run the example.
     parser.add_argument("-c","--customer_id",type=str,required=True,help="The Google Ads customer ID.",)
     parser.add_argument("-i", "--ad_id", type=str, required=True, help="The ad ID.")'''
-
-
 
 #remove expanded text ad
 def remove_expanded_text_ad(client, customer_id, ad_group_id, ad_id):

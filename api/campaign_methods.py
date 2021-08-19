@@ -119,18 +119,22 @@ def _handle_googleads_exception(exception):
 
 
 #update campaign, only updates campaign resource name
-def update_campaign(client, customer_id, campaign_id):
+def update_campaign(client, customer_id, campaign_id, edit_campaign_name, edit_budget_amt):
+    final_campaign_name = str(edit_campaign_name)
+    final_budget = int(edit_budget_amt)
+    
     campaign_service = client.get_service("CampaignService")
     # Create campaign operation.
     campaign_operation = client.get_type("CampaignOperation")
     campaign = campaign_operation.update
+    campaign.name = final_campaign_name
     
-    #campaign.campaign_budget = 
-
+    #campaign.campaign_budget = final_budget
+    
     campaign.resource_name = campaign_service.campaign_path(
         customer_id, campaign_id
     )
-
+    
     campaign_status_enum = client.enums.CampaignStatusEnum.PAUSED
 
     campaign.network_settings.target_search_network = False
@@ -146,5 +150,5 @@ def update_campaign(client, customer_id, campaign_id):
 
     print(f"Updated campaign {campaign_response.results[0].resource_name}.")
     
-#update_campaign(client = , customer_id= , campaign_id= )
+    return({'status' : campaign_response.results[0].resource_name})
 

@@ -59,10 +59,12 @@ def add_keywords(client, customer_id, ad_group_id, keyword_text):
         "Created keyword "
         f"{ad_group_criterion_response.results[0].resource_name}."
     )
-    return({'status':'success'})
+    return({'status':ad_group_criterion_response.results[0].resource_name})
 
 
-def update_keywords(client, customer_id, ad_group_id, criterion_id):
+def update_keywords(client, customer_id, ad_group_id, criterion_id, edit_keyword_text):
+    final_kw = str(edit_keyword_text)
+
     agc_service = client.get_service("AdGroupCriterionService")
     ad_group_criterion_operation = client.get_type("AdGroupCriterionOperation")
 
@@ -71,6 +73,7 @@ def update_keywords(client, customer_id, ad_group_id, criterion_id):
         customer_id, ad_group_id, criterion_id
     )
     ad_group_criterion.status = client.enums.AdGroupCriterionStatusEnum.ENABLED
+    ad_group_criterion.keyword.text = final_kw #added line #problem line
     ad_group_criterion.final_urls.append("https://www.example.com")
     client.copy_from(
         ad_group_criterion_operation.update_mask,
@@ -81,6 +84,7 @@ def update_keywords(client, customer_id, ad_group_id, criterion_id):
         customer_id=customer_id, operations=[ad_group_criterion_operation]
     )
     print(f"Updated keyword {agc_response.results[0].resource_name}.")
+    return {'status' : agc_response.results[0].resource_name}
 
 '''
     parser.add_argument(

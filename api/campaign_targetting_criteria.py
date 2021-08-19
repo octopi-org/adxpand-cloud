@@ -122,12 +122,4 @@ def _create_proximity_op(client, customer_id, campaign_id):
             "specified, will default to New York. For more information on "
             "determining this value, see: "
             "https://developers.google.com/google-ads/api/reference/data/geotargets")
-    try:
-        main(
-            googleads_client,
-            args.customer_id,
-            args.campaign_id,
-            args.keyword_text,
-            args.location_id,
-        )
     '''
