@@ -154,8 +154,8 @@ def phone_login_GA_helper(client, customer_id):
                 jsonlistobject.append( dictsample )
         
         json_formatted_dict = { 
-            'status':'success',
-            'data':jsonlistobject,
+            'status' : 'success' ,
+            'data' : jsonlistobject ,
         }
         #json_formatted_str = json.dumps(json_formatted_dict)
         return json_formatted_dict
