@@ -80,6 +80,7 @@ def _create_keyword_plan(client, customer_id):
     
     keyword_plan = operation.create
 
+#need a variable called keyword_plan_name
     keyword_plan.name = f"Keyword plan for traffic estimate {uuid.uuid4()}"
 
     forecast_interval = client.get_type(
@@ -117,6 +118,7 @@ def _create_keyword_plan_campaign(client, customer_id, keyword_plan):
     operation = client.get_type("KeywordPlanCampaignOperation")
     keyword_plan_campaign = operation.create
 
+#keyword_plan_campaign_name
     keyword_plan_campaign.name = f"Keyword plan campaign {uuid.uuid4()}"
     keyword_plan_campaign.cpc_bid_micros = 1000000
     keyword_plan_campaign.keyword_plan = keyword_plan
