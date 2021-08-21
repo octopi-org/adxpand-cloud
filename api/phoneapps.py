@@ -1,14 +1,17 @@
+from api.ad_group_methods import create_ad_group, update_ad_group
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse
 import json
 import os
 from django.contrib.auth.hashers import check_password
 from google.ads.googleads import client
+from .campaign_targetting_criteria import add_campaign_targeting_criteria
 from .link_manage_to_cus import link_manager_to_client
 from .models import Account, MyAccountManager, History
 from .campaign_methods import update_campaign, add_campaign
-from .keyword_methods import update_keywords, add_keywords
+from .keyword_methods import update_keywords, add_keywords, remove_keyword
 from .GAfunctions import phone_login_GA_helper
+from .ad_expanded_text_methods import add_expanded_text_ads, remove_expanded_text_ad, update_expanded_text_ad
 from google.ads.googleads.client import GoogleAdsClient
 from google.ads.googleads.errors import GoogleAdsException
 
@@ -42,13 +45,17 @@ def phoneregisteraccount(account):
             password1 = account.POST['password']
             username1 = account.POST['username']
 
+            #create new account on account models
             create_new_user_acc = Account.objects.create_user(
                 email = email1, 
                 username = username1,
                 password = password1,    
                 )
             create_new_user_acc.save()
-            #print(create_new_user_acc)
+            
+            #check that new model is created
+            newaccount = Account.objects.get(email1)
+            print(newaccount)
             return JsonResponse({'status':'success'})
     except:
         return JsonResponse({"status": "failed"})
@@ -60,15 +67,18 @@ def phonelogin(info):
             email1 = info.GET['email']
             password1 = info.GET['password']
             #username1 = info.GET['username']
+            
             try:
+                #get account from accounts model
                 grabexisting_acc = Account.objects.get( 
                     email = str(email1), 
                     
                     )
                 
+                #check pw same as one in account models
                 check_pw = Account.objects.get(email = str(email1)).check_password(password1)
                 if check_pw == True:
-
+                    #calls phone_login_GA_helper from GAfunctions.py
                     ##################################################################################
                     # Include this block before calling Google Ads API DONT DELETE GOOD EG REFERENCE # 
                     ##################################################################################
@@ -78,7 +88,7 @@ def phonelogin(info):
                     ####################################################
 
                     google_ads_client = GoogleAdsClient.load_from_dict(credentials)
-                    new_dict = phone_login_GA_helper(google_ads_client ,"1255132966")
+                    new_dict = phone_login_GA_helper(google_ads_client ,"")
 
                     #######################################################
                     # Include this block after calling the Google Ads Api #
@@ -102,18 +112,53 @@ def newcampaignbutton(info):
         if info.method == 'POST':
             campaign1 = str(info.POST['Campaign'])
             ad_grp_1 = str(info.POST['Ad Group'])
-            ad_name_1 = str(info.POST['Ad Name'])
+            #ad_name_1 = str(info.POST['Ad Name'])
             ad_title_1 = str(info.POST['Ad Title'])
             ad_describ_1 = str(info.POST['Ad Description'])
             keywords_1 = str(info.POST['Keywords'])
             budget_1 = str(info.POST['Budget'])
             location_1 = str(info.POST['Location'])
-            #add_campaign(client, customer_id)
-
-            #need to add to 3 models
-            #Ben_Tuition.objects.create()
             
-            return JsonResponse({'campaign':'campaign created'})
+            ##################################################################################
+            # Include this block before calling Google Ads API DONT DELETE GOOD EG REFERENCE # 
+            ##################################################################################
+            data = json.loads(os.getenv("SECRET_KEY_04", SECRET_KEY_04))
+            with open(json_key_file_path, 'w', encoding='utf-8') as f:
+                json.dump(data, f, ensure_ascii=False, indent=4)
+                ####################################################
+
+            google_ads_client = GoogleAdsClient.load_from_dict(credentials)
+            
+            return_campaign_id = add_campaign(client = google_ads_client, 
+                customer_id = "7975644246", 
+                choose_campaign_name=campaign1, 
+                choose_budget_amt= budget_1 )
+            
+            return_ad_group_id = create_ad_group(client = google_ads_client, 
+            customer_id= "", campaign_id= return_campaign_id, 
+            choose_ad_grp_name = ad_grp_1)
+
+            success_add_kw_dict = add_keywords(client = google_ads_client, customer_id = "", 
+                ad_group_id = return_ad_group_id, 
+                keyword_text = keywords_1)
+
+            return_ad_id = add_expanded_text_ads(client = google_ads_client, customer_id = "", 
+            ad_group_id = return_ad_group_id, number_of_ads = 1, update_ad_head_1 = ad_title_1, 
+            update_ad_desc_1 = ad_describ_1)
+
+            success_dict = { 'created campaign id' : return_campaign_id, 'created ad_group': return_ad_group_id,
+            'added keywords': success_add_kw_dict, 'added ads' : return_ad_id }
+            
+            # Include this block after calling the Google Ads Api #
+            if os.path.exists(json_key_file_path):
+                print('KEYS has been deleted')
+                os.remove(json_key_file_path)
+            else:
+                print("KEYS don't exist")
+                    #######################################################
+      
+            #need to add to 3 models#_.objects.create()
+            return JsonResponse(success_dict)
     except:
         return JsonResponse({'status':'failed'})
 
@@ -122,24 +167,58 @@ def editcampaignbutton(info):
     try:
         if info.method == 'POST':
             
-            campaign1 = str(info.POST['Campaign'])
-            ad_grp_1 = str(info.POST['Ad Group'])
-            ad_name_1 = str(info.POST['Ad Name'])
+            campaign_1 = str(info.POST['Campaign']) #this is campaign name
+            ad_grp_1 = str(info.POST['Ad Group']) #is ad group name
             ad_title_1 = str(info.POST['Ad Title'])
             ad_describ_1 = str(info.POST['Ad Description'])
-            kw_to_add_1 = str(info.POST['Keywords_To_Add'])
-            kw_to_del_1 = str(info.POST['Keywords_To_Del'])
-            neg_kw_to_add_1 = str(info.POST['Negative_Keywords_To_Add'])
+            kw_to_add_1 = str(info.POST['Keywords_To_Add']) #can do this but will run add_keywords method
+            kw_to_del_1 = str(info.POST['Keywords_To_Del']) #cant do this 
+            neg_kw_to_add_1 = str(info.POST['Negative_Keywords_To_Add']) 
             neg_kw_to_del_1 = str(info.POST['Negative_Keywords_To_Del'])
             budget_1 = str(info.POST['Budget'])
             location_1 = str(info.POST['Location'])
-            #update_campaign(client, customer_id, campaign_id)
-            #update_keywords(client, customer_id, ad_group_id, criterion_id)
             
-            #update into all 3 models
-            #Ben_Tuition.objects.update_or_create(
+            data = json.loads(os.getenv("SECRET_KEY_04", SECRET_KEY_04))
+            with open(json_key_file_path, 'w', encoding='utf-8') as f:
+                json.dump(data, f, ensure_ascii=False, indent=4)
+                ####################################################
+
+            google_ads_client = GoogleAdsClient.load_from_dict(credentials)
+            
+            return_campaign_id = update_campaign(client = google_ads_client, customer_id = "", campaign_id = "",
+                choose_campaign_name = campaign_1, choose_budget_amt= budget_1 )
+            
+            return_ad_group_id = update_ad_group(client = google_ads_client, 
+            customer_id= "", ad_group_id = "", 
+            cpc_bid_micro_amount = budget_1, edit_ad_grp_name = ad_grp_1)
+
+#have to kiv this as keyword cant be deleted.  
+            #success_add_kw_dict = update_keywords(client = google_ads_client, customer_id = "", 
+                #ad_group_id = str_ad_group_id, 
+                #keyword_text = keywords_1)
+
+            return_ad_id = update_expanded_text_ad(client = google_ads_client, customer_id = "", 
+            ad_group_id = return_ad_group_id, number_of_ads = 1, 
+            update_ad_head_1 = ad_title_1, update_ad_desc_1 = ad_describ_1)
+
+            return_op_success = add_campaign_targeting_criteria(client = google_ads_client, customer_id = "",
+            campaign_id = return_campaign_id, keyword_text = neg_kw_to_add_1, location_id = location_1)
+
+            success_dict = { 'updated campaign id' : return_campaign_id, 'updated ad_group': return_ad_group_id,
+            'updated ad':return_ad_id, 'added negative keywords': return_op_success,}
+            
+            # Include this block after calling the Google Ads Api #
+            if os.path.exists(json_key_file_path):
+                print('KEYS has been deleted')
+                os.remove(json_key_file_path)
+            else:
+                print("KEYS don't exist")
+                    #######################################################
+
+            #update into all 3 models #have yet to update the models
+            #_.objects.update_or_create(
             #)
-            return JsonResponse({'campaign':'campaign edited'})
+            return JsonResponse(success_dict)
     except:
         return JsonResponse({'status':'failed'})
     
@@ -171,7 +250,7 @@ def connect_google_acc(info):
             cus_id = info.POST['Customer Id']
             #return_str_manager_id = link_manager_to_client(customer_id= cus_id, manager_customer_id= '1__')
             #Account.objects.filter(str(username)).update(manager_id= return_str_manager_id)
-            
+            #above function works but i need to remodel the models first
             return JsonResponse({'status':'success'})
     except:
         return JsonResponse({'status':'failed'}) 

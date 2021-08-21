@@ -41,6 +41,7 @@ def add_campaign_targeting_criteria(client, customer_id, campaign_id, keyword_te
 
     for result in campaign_criterion_response.results:
         print(f'Added campaign criterion "{result.resource_name}".')
+    return {'status':'sucess in all operations'}
 
 
 # [START add_campaign_targeting_criteria]
