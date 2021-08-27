@@ -26,7 +26,6 @@ from google.ads.googleads.errors import GoogleAdsException
 from google.api_core import protobuf_helpers
 
 
-
 # [START add_expanded_text_ads]
 def add_expanded_text_ads(client, customer_id, ad_group_id, number_of_ads,
     **data):

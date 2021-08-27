@@ -37,6 +37,13 @@ credentials = {
     "impersonated_email": os.getenv("SECRET_KEY_05", SECRET_KEY_05)
 }
 
+# Please learn some Software Engineering Conventions. Helps a lot for your future Mods too. At the very least, no when to use snake_case, camelCase, PascalCase etc. Not too important for now.
+# Also stuff like how to name variables covered in Software Convention also. Different Companies will use different styles. But in general, you work just a bit messy. 
+# No worries though, these things take time to cultivate. Below are the ones provided by NUS. Can take a look (though i won't enforce it to be followed or anthing like that)
+# GIT Conventions: https://se-education.org/guides/conventions/git.html
+# Java Conventions(extendable to python): https://se-education.org/guides/conventions/java/intermediate.html
+# Documentation Convention: https://developers.google.com/style (More for the future on how to write good documentation)
+# Markdown Conventions (More for READMEs and using MD Language to generate documentation): https://se-education.org/guides/conventions/markdown.html
 def phoneregisteraccount(account):
     #the app will post data to us,
     try:
@@ -60,7 +67,8 @@ def phoneregisteraccount(account):
     except:
         return JsonResponse({"status": "failed"})
 
-
+# to improve code reuse, you can abstract the block to it's own function and validate. Makes your life easier also.
+# i.e. An "open lock" function and a "close lock" function
 def phonelogin(info):
     try:
         if info.method == 'GET':
@@ -106,7 +114,8 @@ def phonelogin(info):
     except:
         return JsonResponse({'status':'failed'})
 
-
+# You can actually abstract out the info.POST object and use a seperate function to retrieve what you want. 
+# Better still, you can just use the info.POST object directly as arguments in the relevant function params. 
 def newcampaignbutton(info):
     try:
         if info.method == 'POST':
@@ -129,6 +138,7 @@ def newcampaignbutton(info):
 
             google_ads_client = GoogleAdsClient.load_from_dict(credentials)
             
+            # Try to make code readable. Good practice. If you're going to multi line, multi line from the start
             return_campaign_id = add_campaign(client = google_ads_client, 
                 customer_id = "7975644246", 
                 choose_campaign_name=campaign1, 
