@@ -1,6 +1,6 @@
 # The {product name} API Project 
 
-> a proud BuildIT.Io project
+> a proud OCTOPI project
 
 # **Contents**
 
