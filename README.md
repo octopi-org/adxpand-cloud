@@ -1,6 +1,6 @@
 # The {product name} API Project 
 
-> a proud OCTOPI project
+> an OCTOPI project
 
 # **Contents**
 
